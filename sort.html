@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Sort Visualizer</title>
+		<link rel="stylesheet" type="text/css" href="/css/style.css">
+		<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+	</head>
+	<body>
+		<div class="header">
+			<div id="navigation"></div>
+			<a href="https://github.com/ohpxho/js-sorting-visualizer.git" target="_blank"><img src="img/git-logo.png" id="git-logo" title="Github Project Link"></a>
+			<span class="title">Sorting Visualizer</span>
+		</div>
+
+		<div class="main"> 
+			<div class="section">
+				<div class='menu-sort-con'>
+					<ul class="menu-list" id="menu-list">
+						<!--menu - algorithm-->
+						<li class="menu-list-li">
+							<p>Algorithm</p>
+						
+							<ul class="m-algo" id="m-algo">
+								<li><label class="m-lbl" for="a">insertion<input class="algo" id="a" onchange="setDescription()" type="radio" name="sort-menu" value="insertion" checked/></li></label>
+								<li><label class="m-lbl" for="b">bubble<input class="algo" id="b" onchange="setDescription()" type="radio" name="sort-menu" value="bubble"/></li></label>
+								<li><label class="m-lbl" for="c">quick<input class="algo" id="c" onchange="setDescription()" type="radio" name="sort-menu" value="quick"/></li></label>	
+								<li><label class="m-lbl" for="d">selection<input class="algo" id="d" onchange="setDescription()" type="radio" name="sort-menu" value="selection"/></li></label>	
+								<li><label class="m-lbl" for="e">merge<input class="algo" id="e" onchange="setDescription()" type="radio" name="sort-menu" value="merge"/></li></label>	
+							</ul>
+						</li>
+						
+						<!--menu - random setup-->
+						<li class="menu-list-li">
+							<p>Random Setup</p>
+
+							<ul class="m-rand" id="m-rand">
+								<br><li>
+									&nbsp;&nbsp;<span>numOfElements = </span>
+									<select id="size-box">
+									<option>10</option>
+									<option>20</option>
+									<option selected>30</option>
+									<option>40</option>
+								</select></li>
+								<br><li>&nbsp;&nbsp;<span>maxValuePerElement = </span><input type="box" id="max-box" value="25"/></li>
+								<br><li><button id="random-btn">RANDOM</button></li>
+							</ul>
+						</li>
+						
+						<!-- menu - manual setup-->
+						<li class="menu-list-li">
+							<p>Manual Setup</p>
+
+							<ul class="m-man" id="m-man">
+								<li><textarea id="input-array">[10,9,8,7,6,5,4,3,2,1]</textarea></li>
+								<li><button id="generate-btn">GENERATE</button></li>
+							</ul>
+						</li>
+						
+						<li class="menu-list-li"><button id="sort-btn">SORT</button></li>
+						
+					</div>
+				</ul>
+			</div>
+
+			<div class="section">
+				<center>
+				<div class="visualizer-con">	
+					<div id="li-bar-con" class="bar-card"></div>
+					<button id="back-btn" disabled><img class="ctrl-icon" src="./img/next.png"/></button>
+					<button id="stop-btn" disabled><img class="ctrl-icon" src="./img/pause.png"/></button>
+					<button id="next-btn" disabled><img class="ctrl-icon" src="./img/next.png"/></button>
+				</div>
+				</center>
+			</div>
+
+			<div class="section">
+				<div class="desc-main-con">
+					<br>
+					<div class="desc-header-con">
+						<span id="to-desc">Description</span>
+						<span id="to-pseu">Pseudocode</span>
+					</div>
+					<div class="des-pseu-con">
+						<div class="desc-con" id="desc"></div>
+						<div class="pseu-con" id="pseu"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+	<script>
+		$("#navigation").load("./component/navbar.html");
+	</script>
+	
+	<script type="module" >
+		import {random, generate} from './js/bar.js';
+		import {sort} from './js/sort.js';
+		import {play, pause, next, prev, stop} from './js/controller.js';
+		window.onload = () => random();
+		document.getElementById('generate-btn').onclick = () => generate();
+		document.getElementById('random-btn').onclick = () => random();
+		document.getElementById('sort-btn').onclick = () => sort();
+		document.getElementById('stop-btn').onclick = () => stop();
+		document.getElementById('next-btn').onclick = () => next();
+		document.getElementById('back-btn').onclick = () => prev();
+	</script>
+
+	<script>
+		let li = document.querySelectorAll('.menu-list-li');
+		for(let i of li){
+			i.addEventListener('click', (e) => {
+				if(!e.target.nextElementSibling) return;
+				let h = e.target.nextElementSibling.style.maxHeight;
+				e.target.nextElementSibling.style.maxHeight = (!h)? '500px':'';	
+				
+				switch(e.target.nextElementSibling.id){
+					case 'm-algo':
+						document.querySelector('#m-rand').style.maxHeight = '';
+						document.querySelector('#m-man').style.maxHeight = '';
+						break;
+					case 'm-rand':
+						document.querySelector('#m-algo').style.maxHeight = '';
+						document.querySelector('#m-man').style.maxHeight = '';
+						break;
+					case 'm-man':
+						document.querySelector('#m-rand').style.maxHeight = '';
+						document.querySelector('#m-algo').style.maxHeight = '';
+						break;
+				}
+			});
+		}
+
+		setDescription();
+		function setDescription(){
+			let algo = document.querySelector('input[name="sort-menu"]:checked').value;
+			$('#desc').innerHTML = '';
+			$('#pseu').innerHTML = '';
+			
+			switch(algo){
+				case 'insertion':
+					$('#desc').load('descriptions/desc-insertion.html');
+					$('#pseu').load('descriptions/pseu-insertion.html');
+					break;
+				case 'bubble':
+					$('#desc').load('descriptions/desc-bubble.html');
+					$('#pseu').load('descriptions/pseu-bubble.html');
+					break;
+				case 'quick':
+					$('#desc').load('descriptions/desc-quick.html');
+					$('#pseu').load('descriptions/pseu-quick.html');
+					break;
+				case 'selection':
+					$('#desc').load('descriptions/desc-selection.html');
+					$('#pseu').load('descriptions/pseu-selection.html');
+					break;
+				case 'merge':
+					$('#desc').load('descriptions/desc-merge.html');
+					$('#pseu').load('descriptions/pseu-merge.html');
+					break;
+			}
+		}
+
+		document.querySelector('#to-desc').onclick = (e)=>{
+			desc.style.width = '100%';
+			desc.style.padding = '0 10px';
+			pseu.style.width = '0';
+			pseu.style.padding = '0';
+			document.querySelector('#to-desc').style.color = '#e08707';
+			document.querySelector('#to-pseu').style.color = 'black';
+		};
+
+		document.querySelector('#to-pseu').onclick = (e)=>{
+			pseu.style.width = '100%';
+			pseu.style.padding = '0 10px';
+			desc.style.width = '0';
+			desc.style.padding = '0';
+			document.querySelector('#to-desc').style.color = 'black';
+			document.querySelector('#to-pseu').style.color = '#e08707';
+		};
+
+	</script>
+</html>

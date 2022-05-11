@@ -1,0 +1,25 @@
+<h2>Selection Sort</h2>
+<p>The selection sort algorithm sorts an array by repeatedly finding the minimum element (considering ascending order) from unsorted part and putting it at the beginning. The algorithm maintains two subarrays in a given array.</p>
+<ol>
+	<li>The subarray which is already sorted.</li> 
+	<li>Remaining subarray which is unsorted.</li>
+</ol>
+<p>In every iteration of selection sort, the minimum element (considering ascending order) from the unsorted subarray is picked and moved to the sorted subarray.</p> 
+
+<h3>Complexity Analysis of Selection Sort:</h3>
+<p><b>Time Complexity:</b> The time complexity of Selection Sort is O(N2) as there are two nested loops:</p>
+<ol>
+	<li>One loop to select an element of Array one by one = O(N)</li>
+	<li>Another loop to compare that element with every other Array element = O(N)</li>
+</ol>
+<p>Therefore overall complexity = O(N)*O(N) = O(N*N) = O(N2)</p>
+
+<p><b>Auxiliary Space:</b> O(1) as the only extra memory used is for temporary variable while swapping two values in Array. The good thing about selection sort is it never makes more than O(n) swaps and can be useful when memory write is a costly operation.</p>
+
+<p><b>Is Selection Sort Algorithm stable?</b></p>
+<p><b>Stability:</b> The default implementation is not stable. However it can be made stable. Please see stable selection sort for details.</p>
+
+<p><b>Is Selection Sort Algorithm in-place?</b></p>
+<p>Yes, it does not require extra space.</p>
+
+<p>Source: <a href="https://www.geeksforgeeks.org/selection-sort/">https://www.geeksforgeeks.org/selection-sort/</a></p>

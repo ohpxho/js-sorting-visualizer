@@ -1,0 +1,37 @@
+<h2>Quick Sort</h2>
+<p>Like Merge Sort, QuickSort is a Divide and Conquer algorithm. It picks an element as pivot and partitions the given array around the picked pivot. There are many different versions of quickSort that pick pivot in different ways.</p> 
+
+<p>1. Always pick first element as pivot.</p>
+<p>2. Always pick last element as pivot. (algorithm used)</p>
+<p>3. Pick a random element as pivot.</p>
+<p>4. Pick median as pivot.</p>
+
+<p>The key process in quickSort is partition(). Target of partitions is, given an array and an element x of array as pivot, put x at its correct position in sorted array and put all smaller elements (smaller than x) before x, and put all greater elements (greater than x) after x. All this should be done in linear time.</p>
+
+<h3>Analysis of QuickSort</h3> 
+<p>Time taken by QuickSort, in general, can be written as following.</p> 
+<p><i>T(n) = T(k) + T(n-k-1) + &Theta;(n)</i></p>
+
+<p>The first two terms are for two recursive calls, the last term is for the partition process. k is the number of elements which are smaller than pivot.</p>
+<p>The time taken by QuickSort depends upon the input array and partition strategy. Following are three cases.</p>
+
+<p><b>Worst Case:</b></p> 
+<p>The worst case occurs when the partition process always picks greatest or smallest element as pivot. If we consider above partition strategy where last element is always picked as pivot, the worst case would occur when the array is already sorted in increasing or decreasing order. Following is recurrence for worst case.</p>  
+<p><i>T(n) = T(0) + T(n-1) + &Theta;(n)which is equivalent to  T(n) = T(n-1) + &Theta;(n)</i></p>
+
+<p><b>Best Case:</b></p>
+<p>The best case occurs when the partition process always picks the middle element as pivot. Following is recurrence for best case.</p> 
+<p><i>T(n) = 2T(n/2) + &Theta;(n)</i></p>
+
+<p><b>Average Case:</b><p> 
+<p>To do average case analysis, we need to consider all possible permutation of array and calculate time taken by every permutation which doesn’t look easy. 
+We can get an idea of average case by considering the case when partition puts O(n/9) elements in one set and O(9n/10) elements in other set. Following is recurrence for this case.</p>  
+<p><i>T(n) = T(n/9) + T(9n/10) + &Theta;(n)</i></p>
+
+<p><b>Is QuickSort stable?</b></p> 
+<p>The default implementation is not stable. However any sorting algorithm can be made stable by considering indexes as comparison parameter.</p> 
+
+<p><b>Is QuickSort In-place?</b></p> 
+<p>As per the broad definition of in-place algorithm it qualifies as an in-place sorting algorithm as it uses extra space only for storing recursive function calls but not for manipulating the input.</p>
+
+<p>Source: <a href="https://www.geeksforgeeks.org/quick-sort/">https://www.geeksforgeeks.org/quick-sort/</a></p>
